@@ -72,6 +72,9 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
      */
     protected Paint mSchemePaint = new Paint();
 
+
+    protected Paint mClickPaint = new Paint();
+
     /**
      * 被选择的日期背景色
      */
@@ -204,7 +207,6 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         mSchemePaint.setAntiAlias(true);
         mSchemePaint.setStyle(Paint.Style.FILL);
         mSchemePaint.setStrokeWidth(2);
-        mSchemePaint.setColor(0xffefefef);
 
         mCurDayTextPaint.setAntiAlias(true);
         mCurDayTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -226,6 +228,11 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         mUnSelectedPaint.setStyle(Paint.Style.FILL);
         mUnSelectedPaint.setStrokeWidth(2);
         mUnSelectedPaint.setColor(Color.RED);
+
+        mClickPaint.setAntiAlias(true);
+        mClickPaint.setStyle(Paint.Style.STROKE);
+        mClickPaint.setStrokeWidth(2);
+        mClickPaint.setColor(Color.YELLOW);
 
         setOnClickListener(this);
         setOnLongClickListener(this);
@@ -274,6 +281,10 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
 
         this.mSelectedPaint.setStyle(Paint.Style.FILL);
         this.mSelectedPaint.setColor(mDelegate.getSelectedThemeColor());
+
+        //
+        this.mSchemePaint.setStyle(Paint.Style.FILL);
+        this.mSchemePaint.setColor(mDelegate.getSchemeThemeColor());
     }
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
@@ -311,6 +322,8 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
                 a.setScheme(TextUtils.isEmpty(d.getScheme()) ? mDelegate.getSchemeText() : d.getScheme());
                 a.setSchemeColor(d.getSchemeColor());
                 a.setSchemes(d.getSchemes());
+                a.setStartCalenday(d.isStartCalenday());
+                a.setEndCalenday(d.isEndCalenday());
             } else {
                 a.setScheme("");
                 a.setSchemeColor(0);

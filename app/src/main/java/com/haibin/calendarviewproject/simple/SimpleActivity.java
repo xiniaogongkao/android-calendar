@@ -3,10 +3,13 @@ package com.haibin.calendarviewproject.simple;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
@@ -83,9 +86,10 @@ public class SimpleActivity extends BaseActivity implements
         findViewById(R.id.fl_current).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCalendarView.setSelectCalendarRange(2021,5,1,2021,5,2);
+                mCalendarView.setSelectCalendarRange(2021, 5, 1, 2021, 5, 2);
             }
         });
+
 
         mCalendarLayout = findViewById(R.id.calendarLayout);
         mCalendarView.setOnYearChangeListener(this);
@@ -95,42 +99,57 @@ public class SimpleActivity extends BaseActivity implements
         mTextMonthDay.setText(mCalendarView.getCurMonth() + "月" + mCalendarView.getCurDay() + "日");
         mTextLunar.setText("今日");
         mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
+        mCalendarView.setSelectSingleMode();
+
+
+        mCalendarView.setOnCalendarInterceptListener(new CalendarView.OnCalendarInterceptListener() {
+            @Override
+            public boolean onCalendarIntercept(Calendar calendar) {
+                return false;
+            }
+
+            @Override
+            public void onCalendarInterceptClick(Calendar calendar, boolean isClick) {
+                Toast.makeText(SimpleActivity.this, "test:" + calendar.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new GroupItemDecoration<String,Article>());
+        mRecyclerView.addItemDecoration(new GroupItemDecoration<String, Article>());
         mRecyclerView.setAdapter(new ArticleAdapter(this));
         mRecyclerView.notifyDataSetChanged();
-//        mCalendarView.setSelectSingleMode();
 
-        mCalendarView.setSelectCalendarRange(2021,5,1,2021,5,9);
 
     }
 
     @Override
     protected void initData() {
 
-        int year = mCalendarView.getCurYear();
+        int year  = mCalendarView.getCurYear();
         int month = mCalendarView.getCurMonth();
 
         Map<String, Calendar> map = new HashMap<>();
-        map.put(getSchemeCalendar(year, month, 3, 0xFF40db25, "假").toString(),
-                getSchemeCalendar(year, month, 3, 0xFF40db25, "假"));
-        map.put(getSchemeCalendar(year, month, 6, 0xFFe69138, "事").toString(),
-                getSchemeCalendar(year, month, 6, 0xFFe69138, "事"));
-        map.put(getSchemeCalendar(year, month, 9, 0xFFdf1356, "议").toString(),
-                getSchemeCalendar(year, month, 9, 0xFFdf1356, "议"));
-        map.put(getSchemeCalendar(year, month, 13, 0xFFedc56d, "记").toString(),
-                getSchemeCalendar(year, month, 13, 0xFFedc56d, "记"));
-        map.put(getSchemeCalendar(year, month, 14, 0xFFedc56d, "记").toString(),
-                getSchemeCalendar(year, month, 14, 0xFFedc56d, "记"));
-        map.put(getSchemeCalendar(year, month, 15, 0xFFaacc44, "假").toString(),
-                getSchemeCalendar(year, month, 15, 0xFFaacc44, "假"));
-        map.put(getSchemeCalendar(year, month, 18, 0xFFbc13f0, "记").toString(),
-                getSchemeCalendar(year, month, 18, 0xFFbc13f0, "记"));
-//        map.put(getSchemeCalendar(year, month, 25, 0xFF13acf0, "假").toString(),
-//                getSchemeCalendar(year, month, 25, 0xFF13acf0, "假"));
-        map.put(getSchemeCalendar(year, month, 27, 0xFF13acf0, "多").toString(),
-                getSchemeCalendar(year, month, 27, 0xFF13acf0, "多"));
+        map.put(getSchemeCalendar(year, month, 3, R.color.solar_background, "有任务", true, false).toString(),
+                getSchemeCalendar(year, month, 3, R.color.solar_background, "假", true, false));
+
+        map.put(getSchemeCalendar(year, month, 4, R.color.solar_background, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 4, R.color.solar_background, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 5, R.color.solar_background, "有任务", false, true).toString(),
+                getSchemeCalendar(year, month, 5, R.color.solar_background, "假", false, true));
+        map.put(getSchemeCalendar(year, month, 6, R.color.alivc_record_color_home_hint, "有任务", true, false).toString(),
+                getSchemeCalendar(year, month, 6, R.color.alivc_record_color_home_hint, "假", true, false));
+        map.put(getSchemeCalendar(year, month, 7, R.color.alivc_record_color_home_hint, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 7, R.color.alivc_record_color_home_hint, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 8, R.color.alivc_record_color_home_hint, "有任务", false, true).toString(),
+                getSchemeCalendar(year, month, 8, R.color.alivc_record_color_home_hint, "假", false, true));
+        map.put(getSchemeCalendar(year, month, 9, R.color.colorAccent, "有任务", true, false).toString(),
+                getSchemeCalendar(year, month, 9, R.color.colorAccent, "假", true, false));
+        map.put(getSchemeCalendar(year, month, 10, R.color.colorAccent, "有任务", false, true).toString(),
+                getSchemeCalendar(year, month, 10, R.color.colorAccent, "假", false, true));
+
+
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mCalendarView.setSchemeDate(map);
 
@@ -155,13 +174,15 @@ public class SimpleActivity extends BaseActivity implements
         }
     }
 
-    private Calendar getSchemeCalendar(int year, int month, int day, int color, String text) {
+    private Calendar getSchemeCalendar(int year, int month, int day, int color, String text, boolean isStart, boolean isEnd) {
         Calendar calendar = new Calendar();
         calendar.setYear(year);
         calendar.setMonth(month);
         calendar.setDay(day);
-        calendar.setSchemeColor(color);//如果单独标记颜色、则会使用这个颜色
+        calendar.setSchemeColor(getResources().getColor(color));//如果单独标记颜色、则会使用这个颜色
         calendar.setScheme(text);
+        calendar.setStartCalenday(isStart);
+        calendar.setEndCalenday(isEnd);
         return calendar;
     }
 

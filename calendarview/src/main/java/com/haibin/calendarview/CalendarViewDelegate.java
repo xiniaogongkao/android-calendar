@@ -330,6 +330,7 @@ final class CalendarViewDelegate {
      */
     Map<String, Calendar> mSchemeDatesMap;
 
+
     /**
      * 日期拦截事件
      */
@@ -1047,6 +1048,11 @@ final class CalendarViewDelegate {
             Calendar d = mSchemeDatesMap.get(key);
             targetCalendar.mergeScheme(d, getSchemeText());
         }
+    }
+
+
+    final boolean findRangeToScheme(Calendar targetCalendar){
+        return mSchemeDatesMap != null && mSchemeDatesMap.containsKey(targetCalendar.toString());
     }
 
     Calendar createCurrentDate() {

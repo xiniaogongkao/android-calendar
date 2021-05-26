@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#ffffff</color>
 
     <color name="line_color">#e7e7e7</color>
     <color name="content_background">#f2f2f2</color>
     <color name="solar_background">#009988</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#ff00c1de</color>
+    <color name="aliyun_black">#000000</color>
+    <color name="alivc_record_color_home_hint">#FC3D39</color>
+
 </resources>

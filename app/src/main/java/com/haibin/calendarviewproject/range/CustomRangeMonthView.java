@@ -3,6 +3,7 @@ package com.haibin.calendarviewproject.range;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.RangeMonthView;
@@ -30,66 +31,40 @@ public class CustomRangeMonthView extends RangeMonthView {
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme,
                                      boolean isSelectedPre, boolean isSelectedNext) {
-        int cx = x + mItemWidth / 2;
-        int cy = y + mItemHeight / 2;
-        if (isSelectedPre) {
-            if (isSelectedNext) {
-                canvas.drawRect(x, cy - mRadius, x + mItemWidth, cy + mRadius, mSelectedPaint);
-            } else {//最后一个，the last
-                canvas.drawRect(x, cy - mRadius, cx, cy + mRadius, mSelectedPaint);
-                canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
-            }
-        } else {
-            if (isSelectedNext) {
-                canvas.drawRect(cx, cy - mRadius, x + mItemWidth, cy + mRadius, mSelectedPaint);
-            }
-            canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
-        }
-
-        return false;
-    }
-
-    private void normal(Canvas canvas, int x, int y) {
+        // 选中事件
         int cx = x + mItemWidth / 2;
         int cy = y + mItemHeight / 2;
         canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
-    }
-
-    @Override
-    protected boolean onDrawUnSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelectedPre, boolean isSelectedNext) {
-        //TODO 判断其它各种状态
-        int cx = x + mItemWidth / 2;
-        int cy = y + mItemHeight / 2;
-        if (isSelectedPre) {
-            if (isSelectedNext) {
-                canvas.drawRect(x, cy - mRadius, x + mItemWidth, cy + mRadius, mUnSelectedPaint);
-            } else {//最后一个，the last
-                canvas.drawRect(x, cy - mRadius, cx, cy + mRadius, mUnSelectedPaint);
-                canvas.drawCircle(cx, cy, mRadius, mUnSelectedPaint);
-            }
-        } else {
-            if (isSelectedNext) {
-                canvas.drawRect(cx, cy - mRadius, x + mItemWidth, cy + mRadius, mUnSelectedPaint);
-            }
-            canvas.drawCircle(cx, cy, mRadius, mUnSelectedPaint);
-        }
         return false;
     }
 
+
     @Override
     protected void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y, boolean isSelected) {
+        mSchemePaint.setStyle(Paint.Style.FILL);
+
         int cx = x + mItemWidth / 2;
         int cy = y + mItemHeight / 2;
-        canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
+
+        if (calendar.isStartCalenday()) {
+            canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
+            canvas.drawRect(cx, cy - mRadius, x + mItemWidth, cy + mRadius, mSchemePaint);
+        } else if (calendar.isEndCalenday()) {
+            canvas.drawRect(x, cy - mRadius, cx, cy + mRadius, mSchemePaint);
+            canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
+        } else {
+            canvas.drawRect(cx, cy - mRadius, x + mItemWidth, cy + mRadius, mSchemePaint);
+            canvas.drawRect(x, cy - mRadius, cx, cy + mRadius, mSchemePaint);
+        }
     }
 
     @Override
     protected void onDrawText(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelected) {
         float baselineY = mTextBaseLine + y;
-        int cx = x + mItemWidth / 2;
+        int   cx        = x + mItemWidth / 2;
 
         boolean isInRange = isInRange(calendar);
-        boolean isEnable = !onCalendarIntercept(calendar);
+        boolean isEnable  = !onCalendarIntercept(calendar);
 
         if (isSelected) {
             canvas.drawText(String.valueOf(calendar.getDay()),

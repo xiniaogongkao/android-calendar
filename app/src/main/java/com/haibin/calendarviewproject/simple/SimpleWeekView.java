@@ -31,6 +31,27 @@ public class SimpleWeekView extends WeekView {
         int cx = x + mItemWidth / 2;
         int cy = mItemHeight / 2;
         canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
+
+        ////
+
+//        int cx = x + mItemWidth / 2;
+//        int cy = y + mItemHeight / 2;
+//        if (isSelectedPre) {
+//            if (isSelectedNext) {
+//                canvas.drawRect(x, cy - mRadius, x + mItemWidth, cy + mRadius, mSelectedPaint);
+//            } else {//最后一个，the last
+//                canvas.drawRect(x, cy - mRadius, cx, cy + mRadius, mSelectedPaint);
+//                canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
+//            }
+//        } else {
+//            if (isSelectedNext) {
+//                canvas.drawRect(cx, cy - mRadius, x + mItemWidth, cy + mRadius, mSelectedPaint);
+//            }
+//            canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
+//        }
+//
+
+
         return false;
     }
 

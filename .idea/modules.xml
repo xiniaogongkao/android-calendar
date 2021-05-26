@@ -5,6 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/CalendarView.iml" filepath="$PROJECT_DIR$/.idea/CalendarView.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CalendarView.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CalendarView.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/calendarview/CalendarView.calendarview.iml" filepath="$PROJECT_DIR$/.idea/modules/calendarview/CalendarView.calendarview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-calendar.iml" filepath="$PROJECT_DIR$/.idea/modules/android-calendar.iml" group="android-calendar" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="android-calendar/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calendarview/calendarview.iml" filepath="$PROJECT_DIR$/.idea/modules/calendarview/calendarview.iml" group="android-calendar/calendarview" />
     </modules>
   </component>
 </project>

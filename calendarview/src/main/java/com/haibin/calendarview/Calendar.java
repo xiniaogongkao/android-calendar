@@ -122,6 +122,29 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
     private Calendar lunarCalendar;
 
 
+
+
+    ////// 范围选择
+    private boolean isStartCalenday;
+    private boolean isEndCalenday;
+
+    public boolean isEndCalenday() {
+        return isEndCalenday;
+    }
+
+    public void setEndCalenday(boolean endCalenday) {
+        isEndCalenday = endCalenday;
+    }
+
+    public boolean isStartCalenday() {
+        return isStartCalenday;
+    }
+
+    public void setStartCalenday(boolean startCalenday) {
+        isStartCalenday = startCalenday;
+    }
+
+
     public int getYear() {
         return year;
     }

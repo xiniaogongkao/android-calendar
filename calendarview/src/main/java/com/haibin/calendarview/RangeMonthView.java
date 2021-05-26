@@ -26,8 +26,11 @@ import android.view.View;
  */
 public abstract class RangeMonthView extends BaseMonthView {
 
+    private int mRadius;
+
     public RangeMonthView(Context context) {
         super(context);
+        mRadius = Math.min(mItemWidth, mItemHeight) / 5 * 2;
     }
 
 
@@ -40,7 +43,7 @@ public abstract class RangeMonthView extends BaseMonthView {
                 mDelegate.getCalendarPaddingRight()) / 7;
         onPreviewHook();
         int count = mLineCount * 7;
-        int d = 0;
+        int d     = 0;
         for (int i = 0; i < mLineCount; i++) {
             for (int j = 0; j < 7; j++) {
                 Calendar calendar = mItems.get(d);
@@ -59,6 +62,7 @@ public abstract class RangeMonthView extends BaseMonthView {
                 }
                 draw(canvas, calendar, i, j);
                 ++d;
+                Log.d("test_end", "d:" + d);
             }
         }
     }
@@ -75,13 +79,13 @@ public abstract class RangeMonthView extends BaseMonthView {
         int x = j * mItemWidth + mDelegate.getCalendarPaddingLeft();
         int y = i * mItemHeight;
         onLoopStart(x, y);
-        boolean isSelected = isCalendarSelected(calendar);
-        boolean hasScheme = calendar.hasScheme();
-        boolean isPreSelected = isSelectPreCalendar(calendar);
+        boolean isSelected     = isCalendarSelected(calendar);
+        boolean hasScheme      = calendar.hasScheme();
+        boolean isPreSelected  = isSelectPreCalendar(calendar);
         boolean isNextSelected = isSelectNextCalendar(calendar);
 
-        Log.e("test_end","hasScheme:" +isSelected  + " calendar:"+calendar.toString());
-        Log.e("test_end","hasScheme:" +hasScheme  + " calendar:"+calendar.toString());
+        Log.e("test_end", "hasScheme:" + isSelected + " calendar:" + calendar.toString());
+        Log.e("test_end", "hasScheme:" + hasScheme + " calendar:" + calendar.toString());
         if (hasScheme) {
             //标记的日子
             boolean isDrawSelected = false;//是否继续绘制选中的onDrawScheme
@@ -93,15 +97,15 @@ public abstract class RangeMonthView extends BaseMonthView {
                 mSchemePaint.setColor(calendar.getSchemeColor() != 0 ? calendar.getSchemeColor() : mDelegate.getSchemeThemeColor());
                 onDrawScheme(canvas, calendar, x, y, true);
             }
+
         } else {
             if (isSelected) {
                 onDrawSelected(canvas, calendar, x, y, false, isPreSelected, isNextSelected);
-            }else {
-//                onDrawUnSelected(canvas, calendar, x, y, false, isPreSelected, isNextSelected);
             }
         }
         onDrawText(canvas, calendar, x, y, hasScheme, isSelected);
     }
+
 
     /**
      * 日历是否被选中
@@ -128,11 +132,14 @@ public abstract class RangeMonthView extends BaseMonthView {
         if (!isClick) {
             return;
         }
+
         Calendar calendar = getIndex();
 
         if (calendar == null) {
             return;
         }
+
+        /////draw click
 
         if (mDelegate.getMonthViewShowMode() == CalendarViewDelegate.MODE_ONLY_CURRENT_MONTH
                 && !calendar.isCurrentMonth()) {
@@ -191,7 +198,7 @@ public abstract class RangeMonthView extends BaseMonthView {
         mCurrentItem = mItems.indexOf(calendar);
 
         if (!calendar.isCurrentMonth() && mMonthViewPager != null) {
-            int cur = mMonthViewPager.getCurrentItem();
+            int cur      = mMonthViewPager.getCurrentItem();
             int position = mCurrentItem < 7 ? cur - 1 : cur + 1;
             mMonthViewPager.setCurrentItem(position);
         }
@@ -231,6 +238,18 @@ public abstract class RangeMonthView extends BaseMonthView {
                 isCalendarSelected(preCalendar);
     }
 
+    protected final boolean isInRangePreCalendar(Calendar calendar) {
+        Calendar preCalendar = CalendarUtil.getPreCalendar(calendar);
+        mDelegate.updateCalendarScheme(preCalendar);
+        return mDelegate.findRangeToScheme(calendar);
+    }
+
+    protected final boolean isInRangeNextCalendar(Calendar calendar) {
+        Calendar nextCalendar = CalendarUtil.getNextCalendar(calendar);
+        mDelegate.updateCalendarScheme(nextCalendar);
+        return mDelegate.findRangeToScheme(calendar);
+    }
+
     /**
      * 下一个日期是否选中
      *
@@ -257,10 +276,6 @@ public abstract class RangeMonthView extends BaseMonthView {
      * @return 是否继续绘制onDrawScheme，true or false
      */
     protected abstract boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme,
-                                              boolean isSelectedPre, boolean isSelectedNext);
-
-
-    protected abstract boolean onDrawUnSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme,
                                               boolean isSelectedPre, boolean isSelectedNext);
 
 

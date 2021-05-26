@@ -77,9 +77,21 @@ public class SingleMonthView extends MonthView {
 
     @Override
     protected void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y) {
-//        int cx = x + mItemWidth / 2;
-//        int cy = y + mItemHeight / 2;
-        //canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
+        mSchemePaint.setStyle(Paint.Style.FILL);
+
+        int cx = x + mItemWidth / 2;
+        int cy = y + mItemHeight / 2;
+
+        if (calendar.isStartCalenday()) {
+            canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
+            canvas.drawRect(cx, cy - mRadius, x + mItemWidth, cy + mRadius, mSchemePaint);
+        } else if (calendar.isEndCalenday()) {
+            canvas.drawRect(x, cy - mRadius, cx, cy + mRadius, mSchemePaint);
+            canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
+        } else {
+            canvas.drawRect(cx, cy - mRadius, x + mItemWidth, cy + mRadius, mSchemePaint);
+            canvas.drawRect(x, cy - mRadius, cx, cy + mRadius, mSchemePaint);
+        }
     }
 
     @Override

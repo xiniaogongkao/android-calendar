@@ -137,14 +137,14 @@ public class SimpleActivity extends BaseActivity implements
                 getSchemeCalendar(year, month, 4, R.color.solar_background, "假", Calendar.STATUS_TEST,false, false));
         map.put(getSchemeCalendar(year, month, 5, R.color.solar_background, "有任务",Calendar.STATUS_TEST, false, false).toString(),
                 getSchemeCalendar(year, month, 5, R.color.solar_background, "假", Calendar.STATUS_TEST,false, false));
-        map.put(getSchemeCalendar(year, month, 6, R.color.solar_background, "有任务", false, false).toString(),
-                getSchemeCalendar(year, month, 6, R.color.solar_background, "假", false, false));
-        map.put(getSchemeCalendar(year, month, 7, R.color.solar_background, "有任务", false, false).toString(),
-                getSchemeCalendar(year, month, 7, R.color.solar_background, "假", false, false));
-        map.put(getSchemeCalendar(year, month, 8, R.color.solar_background, "有任务", false, false).toString(),
-                getSchemeCalendar(year, month, 8, R.color.solar_background, "假", false, false));
-        map.put(getSchemeCalendar(year, month, 9, R.color.solar_background, "有任务", false, false).toString(),
-                getSchemeCalendar(year, month, 9, R.color.solar_background, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 6, R.color.solar_background, "有任务", Calendar.STATUS_TEST_2,false, false).toString(),
+                getSchemeCalendar(year, month, 6, R.color.solar_background, "假",Calendar.STATUS_TEST_2, false, false));
+        map.put(getSchemeCalendar(year, month, 7, R.color.solar_background, "有任务", Calendar.STATUS_TEST_2,false, false).toString(),
+                getSchemeCalendar(year, month, 7, R.color.solar_background, "假", Calendar.STATUS_TEST_2,false, false));
+        map.put(getSchemeCalendar(year, month, 8, R.color.solar_background, "有任务", Calendar.STATUS_TEST_2,false, false).toString(),
+                getSchemeCalendar(year, month, 8, R.color.solar_background, "假", Calendar.STATUS_TEST_2,false, false));
+        map.put(getSchemeCalendar(year, month, 9, R.color.solar_background, "有任务", Calendar.STATUS_TEST_2,false, false).toString(),
+                getSchemeCalendar(year, month, 9, R.color.solar_background, "假", Calendar.STATUS_TEST_2,false, false));
         map.put(getSchemeCalendar(year, month, 10, R.color.solar_background, "有任务", false, false).toString(),
                 getSchemeCalendar(year, month, 10, R.color.solar_background, "假", false, false));
         map.put(getSchemeCalendar(year, month, 11, R.color.solar_background, "有任务", false, false).toString(),

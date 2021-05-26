@@ -26,6 +26,7 @@ public class SingleMonthView extends MonthView {
 
     private Bitmap mTestBitmap;
     private Bitmap mDoneBitmap;
+    private Bitmap mSelectedBitmap;
 
 
     /**
@@ -58,6 +59,8 @@ public class SingleMonthView extends MonthView {
     protected void onPreviewHook() {
         mTestBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_clear);
         mDoneBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_custom);
+        mSelectedBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_calendar);
+
         mRadius = Math.min(mItemWidth, mItemHeight) / 5 * 2;
         mRingRadius = Math.min(mItemWidth, mItemHeight) / 7 * 2;
         mSelectTextPaint.setTextSize(dipToPx(getContext(), 17));
@@ -118,9 +121,8 @@ public class SingleMonthView extends MonthView {
         if (calendar.getStatus() == Calendar.STATUS_TEST) {
             canvas.drawBitmap(mDoneBitmap, cx - mDoneBitmap.getWidth() / 2, cy - mDoneBitmap.getHeight() / 2, mSelectedPaint);
         } else if (calendar.getStatus() == Calendar.STATUS_TEST_2) {
-
+            canvas.drawBitmap(mSelectedBitmap, cx - mSelectedBitmap.getWidth() / 2, cy - mSelectedBitmap.getHeight() / 2, mSelectedPaint);
         } else if (calendar.getStatus() == Calendar.STATUS_TEST_3) {
-
         }
     }
 

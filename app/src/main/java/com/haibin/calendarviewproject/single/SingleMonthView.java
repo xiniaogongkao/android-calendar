@@ -1,13 +1,17 @@
 package com.haibin.calendarviewproject.single;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
+import com.haibin.calendarviewproject.R;
 
 /**
  * 高仿魅族日历布局
@@ -16,9 +20,13 @@ import com.haibin.calendarview.MonthView;
 
 public class SingleMonthView extends MonthView {
 
-    private int mRadius;
+    private int   mRadius;
     private Paint mRingPaint = new Paint();
-    private int mRingRadius;
+    private int   mRingRadius;
+
+    private Bitmap mTestBitmap;
+    private Bitmap mDoneBitmap;
+
 
     /**
      * 不可用画笔
@@ -39,7 +47,7 @@ public class SingleMonthView extends MonthView {
 
         mDisablePaint.setColor(0xFF9f9f9f);
         mDisablePaint.setAntiAlias(true);
-        mDisablePaint.setStrokeWidth(dipToPx(context,2));
+        mDisablePaint.setStrokeWidth(dipToPx(context, 2));
         mDisablePaint.setFakeBoldText(true);
 
         mH = dipToPx(context, 18);
@@ -48,9 +56,11 @@ public class SingleMonthView extends MonthView {
 
     @Override
     protected void onPreviewHook() {
-        mRadius = Math.min(mItemWidth, mItemHeight) / 6 * 2;
-        mRingRadius = Math.min(mItemWidth, mItemHeight) / 5 * 2;
-        mSelectTextPaint.setTextSize(dipToPx(getContext(),17));
+        mTestBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_clear);
+        mDoneBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_custom);
+        mRadius = Math.min(mItemWidth, mItemHeight) / 5 * 2;
+        mRingRadius = Math.min(mItemWidth, mItemHeight) / 7 * 2;
+        mSelectTextPaint.setTextSize(dipToPx(getContext(), 17));
     }
 
     /**
@@ -65,12 +75,18 @@ public class SingleMonthView extends MonthView {
      */
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme) {
+        if (hasScheme) {
+            return true;
+        }
 
         int cx = x + mItemWidth / 2;
         int cy = y + mItemHeight / 2;
+        Log.i("test_end_canvas", "cx :" + cx);
+        Log.i("test_end_canvas", "cy :" + cy);
 
         canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
-        canvas.drawCircle(cx, cy, mRingRadius, mRingPaint);
+        canvas.drawBitmap(mTestBitmap, cx - mTestBitmap.getWidth() / 2, cy - mTestBitmap.getHeight() / 2, mSelectedPaint);
+
 
         return true;
     }
@@ -92,14 +108,28 @@ public class SingleMonthView extends MonthView {
             canvas.drawRect(cx, cy - mRadius, x + mItemWidth, cy + mRadius, mSchemePaint);
             canvas.drawRect(x, cy - mRadius, cx, cy + mRadius, mSchemePaint);
         }
+
+        ////////// test code
+
+        if (calendar.getStatus() == 0) {
+            return;
+        }
+
+        if (calendar.getStatus() == Calendar.STATUS_TEST) {
+            canvas.drawBitmap(mDoneBitmap, cx - mDoneBitmap.getWidth() / 2, cy - mDoneBitmap.getHeight() / 2, mSelectedPaint);
+        } else if (calendar.getStatus() == Calendar.STATUS_TEST_2) {
+
+        } else if (calendar.getStatus() == Calendar.STATUS_TEST_3) {
+
+        }
     }
 
     @Override
     protected void onDrawText(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelected) {
-        float baselineY = mTextBaseLine + y - dipToPx(getContext(),1);
-        int cx = x + mItemWidth / 2;
+        float baselineY = mTextBaseLine + y - dipToPx(getContext(), 1);
+        int   cx        = x + mItemWidth / 2;
         if (isSelected) {
-            canvas.drawText(calendar.isCurrentDay() ? "今" : "选",
+            canvas.drawText(String.valueOf(calendar.getDay()),
                     cx,
                     baselineY,
                     mSelectTextPaint);

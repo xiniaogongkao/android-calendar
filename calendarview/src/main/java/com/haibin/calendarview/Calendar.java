@@ -16,6 +16,7 @@
 package com.haibin.calendarview;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -122,11 +123,28 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
     private Calendar lunarCalendar;
 
 
+    //////
+
+    public static final int STATUS_TEST = 1;
+    public static final int STATUS_TEST_2 = 2;
+    public static final int STATUS_TEST_3 = 3;
+
+    private boolean isStartCalenday;
+    private boolean isEndCalenday;
+    // 当天日期状态
+    private int status;
 
 
     ////// 范围选择
-    private boolean isStartCalenday;
-    private boolean isEndCalenday;
+
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public boolean isEndCalenday() {
         return isEndCalenday;
@@ -373,7 +391,7 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
      * @return 日期是否可用
      */
     public boolean isAvailable() {
-        return year > 0 & month > 0 & day > 0 & day <=31 & month <= 12 & year >= 1900 & year <= 2099;
+        return year > 0 & month > 0 & day > 0 & day <= 31 & month <= 12 & year >= 1900 & year <= 2099;
     }
 
     /**
@@ -400,7 +418,9 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
 
     @Override
     public String toString() {
-        return year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
+        final String result = year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
+        Log.d("test_end", "result:" + result);
+        return result;
     }
 
 //    @Override
@@ -431,8 +451,8 @@ public final class Calendar implements Serializable, Comparable<Calendar> {
      * 事件标记服务，现在多类型的事务标记建议使用这个
      */
     public final static class Scheme implements Serializable {
-        private int type;
-        private int shcemeColor;
+        private int    type;
+        private int    shcemeColor;
         private String scheme;
         private String other;
         private Object obj;

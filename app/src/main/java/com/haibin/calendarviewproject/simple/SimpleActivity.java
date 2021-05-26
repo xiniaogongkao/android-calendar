@@ -131,23 +131,33 @@ public class SimpleActivity extends BaseActivity implements
         int month = mCalendarView.getCurMonth();
 
         Map<String, Calendar> map = new HashMap<>();
-        map.put(getSchemeCalendar(year, month, 3, R.color.solar_background, "有任务", true, false).toString(),
-                getSchemeCalendar(year, month, 3, R.color.solar_background, "假", true, false));
+        map.put(getSchemeCalendar(year, month, 3, R.color.solar_background, "有任务", Calendar.STATUS_TEST,true, false).toString(),
+                getSchemeCalendar(year, month, 3, R.color.solar_background, "假", Calendar.STATUS_TEST,true, false));
+        map.put(getSchemeCalendar(year, month, 4, R.color.solar_background, "有任务",Calendar.STATUS_TEST, false, false).toString(),
+                getSchemeCalendar(year, month, 4, R.color.solar_background, "假", Calendar.STATUS_TEST,false, false));
+        map.put(getSchemeCalendar(year, month, 5, R.color.solar_background, "有任务",Calendar.STATUS_TEST, false, false).toString(),
+                getSchemeCalendar(year, month, 5, R.color.solar_background, "假", Calendar.STATUS_TEST,false, false));
+        map.put(getSchemeCalendar(year, month, 6, R.color.solar_background, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 6, R.color.solar_background, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 7, R.color.solar_background, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 7, R.color.solar_background, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 8, R.color.solar_background, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 8, R.color.solar_background, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 9, R.color.solar_background, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 9, R.color.solar_background, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 10, R.color.solar_background, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 10, R.color.solar_background, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 11, R.color.solar_background, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 11, R.color.solar_background, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 12, R.color.solar_background, "有任务", false, true).toString(),
+                getSchemeCalendar(year, month, 12, R.color.solar_background, "假", false, true));
 
-        map.put(getSchemeCalendar(year, month, 4, R.color.solar_background, "有任务", false, false).toString(),
-                getSchemeCalendar(year, month, 4, R.color.solar_background, "假", false, false));
-        map.put(getSchemeCalendar(year, month, 5, R.color.solar_background, "有任务", false, true).toString(),
-                getSchemeCalendar(year, month, 5, R.color.solar_background, "假", false, true));
-        map.put(getSchemeCalendar(year, month, 6, R.color.alivc_record_color_home_hint, "有任务", true, false).toString(),
-                getSchemeCalendar(year, month, 6, R.color.alivc_record_color_home_hint, "假", true, false));
-        map.put(getSchemeCalendar(year, month, 7, R.color.alivc_record_color_home_hint, "有任务", false, false).toString(),
-                getSchemeCalendar(year, month, 7, R.color.alivc_record_color_home_hint, "假", false, false));
-        map.put(getSchemeCalendar(year, month, 8, R.color.alivc_record_color_home_hint, "有任务", false, true).toString(),
-                getSchemeCalendar(year, month, 8, R.color.alivc_record_color_home_hint, "假", false, true));
-        map.put(getSchemeCalendar(year, month, 9, R.color.colorAccent, "有任务", true, false).toString(),
-                getSchemeCalendar(year, month, 9, R.color.colorAccent, "假", true, false));
-        map.put(getSchemeCalendar(year, month, 10, R.color.colorAccent, "有任务", false, true).toString(),
-                getSchemeCalendar(year, month, 10, R.color.colorAccent, "假", false, true));
+        map.put(getSchemeCalendar(year, month, 13, R.color.colorAccent, "有任务", true, false).toString(),
+                getSchemeCalendar(year, month, 13, R.color.colorAccent, "假", true, false));
+        map.put(getSchemeCalendar(year, month, 14, R.color.colorAccent, "有任务", false, false).toString(),
+                getSchemeCalendar(year, month, 14, R.color.colorAccent, "假", false, false));
+        map.put(getSchemeCalendar(year, month, 15, R.color.colorAccent, "有任务", false, true).toString(),
+                getSchemeCalendar(year, month, 15, R.color.colorAccent, "假", false, true));
 
 
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
@@ -175,9 +185,14 @@ public class SimpleActivity extends BaseActivity implements
     }
 
     private Calendar getSchemeCalendar(int year, int month, int day, int color, String text, boolean isStart, boolean isEnd) {
+        return getSchemeCalendar(year,month,day,color,text,0,isStart,isEnd);
+    }
+
+    private Calendar getSchemeCalendar(int year, int month, int day, int color, String text,int status, boolean isStart, boolean isEnd) {
         Calendar calendar = new Calendar();
         calendar.setYear(year);
         calendar.setMonth(month);
+        calendar.setStatus(status);
         calendar.setDay(day);
         calendar.setSchemeColor(getResources().getColor(color));//如果单独标记颜色、则会使用这个颜色
         calendar.setScheme(text);

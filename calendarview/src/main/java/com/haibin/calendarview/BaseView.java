@@ -200,7 +200,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         mSelectTextPaint.setAntiAlias(true);
         mSelectTextPaint.setStyle(Paint.Style.FILL);
         mSelectTextPaint.setTextAlign(Paint.Align.CENTER);
-        mSelectTextPaint.setColor(0xffed5353);
+        mSelectTextPaint.setColor(Color.BLACK);
         mSelectTextPaint.setFakeBoldText(true);
         mSelectTextPaint.setTextSize(CalendarUtil.dipToPx(context, TEXT_SIZE));
 
@@ -324,6 +324,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
                 a.setSchemes(d.getSchemes());
                 a.setStartCalenday(d.isStartCalenday());
                 a.setEndCalenday(d.isEndCalenday());
+                a.setStatus(d.getStatus());
             } else {
                 a.setScheme("");
                 a.setSchemeColor(0);
